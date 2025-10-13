@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,8 +13,11 @@ public class BERTModel {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${bert.url}")
+    private String BASEURL;
+
     public ModelResponse checkEmotion(String text) {
-        String url = "http://localhost:8000/api/check/emotion";
+        String url = BASEURL + "/api/check/emotion";
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("text", text);
         ModelResponse response = restTemplate.postForObject(url, requestBody, ModelResponse.class);
@@ -24,7 +28,7 @@ public class BERTModel {
     }
 
     public ModelResponse checkCrisis(String text) {
-        String url = "http://localhost:8000/api/check/crisis";
+        String url = BASEURL + "/api/check/crisis";
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("text", text);
         ModelResponse response = restTemplate.postForObject(url, requestBody, ModelResponse.class);
