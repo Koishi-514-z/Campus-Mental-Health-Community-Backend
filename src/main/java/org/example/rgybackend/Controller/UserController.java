@@ -34,7 +34,7 @@ public class UserController {
             String userid = userService.getProfileByName(username).getUserid();
             session.setAttribute("user", userid);
         }
-        return false;
+        return result;
     }
 
     @GetMapping("/logout")
